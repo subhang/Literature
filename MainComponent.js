@@ -17,7 +17,8 @@ export default class MainComponent extends Component{
 
         this.state = {
 
-            name : ''
+            name : '',
+            admin : true
 
         };
         console.log("hello");
@@ -81,7 +82,6 @@ export default class MainComponent extends Component{
 
                     <Button style = {styles.gameButton} onPress = {()=>{
 
-                        this.socket.emit('players',this.state.name);
                         navigate(JoinGameScreen,this.state)
 
                     }

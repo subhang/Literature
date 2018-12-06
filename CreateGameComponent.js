@@ -18,21 +18,42 @@ export default class CreateGameComponent extends Component{
         }
         const io = require('socket.io-client');
         this.socket = io('http://192.168.0.104:5678');
+        let isAdmin = this.props.navigation.state.params.admin;
+        if(isAdmin) {
+            let code = "";
+            let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        this.socket.emit('loaded_players',this.props.navigation.state.params.name);
+            for (let i = 0; i < 5; i++) code += possible.charAt(Math.floor(Math.random() * possible.length));
 
-        this.socket.on('loaded_players', (msg)=> {
-            console.log(msg)
-            players_component = this.loadNames(msg)
+            let data = {};
+            data.code = code;
+            data.name = this.props.navigation.state.params.name;
 
-            this.setState({name:msg,playersComponent:players_component})
+            this.socket.emit('create', data);
 
-        })
-        this.socket.on('players', (msg)=> {
-            console.log(msg)
-            this.setState({name:msg})
+            this.socket.on(code + '_joined_players', (data) => {
+                Alert.alert('player joined');
+                console.log(data)
+                //players_component = this.loadNames(msg)
 
-        });
+                //this.setState({name:msg,playersComponent:players_component})
+
+            })
+            this.socket.on('players', (msg) => {
+                console.log(msg)
+                this.setState({name: msg})
+
+            });
+        }
+        else{
+            let code = this.props.navigation.state.params.code;
+            let data = {}
+            data.code = code
+            data.name = this.props.navigation.state.params.name;
+            this.socket.emit('join',data)
+
+
+        }
 
     }
     loadNames(loadedPlayers){

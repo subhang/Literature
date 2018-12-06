@@ -11,8 +11,10 @@ export default class JoinGameComponent extends Component{
         super(props)
         this.state = {
 
-            name : '',
-            playersComponent : []
+            code : '',
+            playersComponent : [],
+            admin : false,
+            name : this.props.navigation.state.params.name
 
         }
 
@@ -59,7 +61,7 @@ export default class JoinGameComponent extends Component{
 
                                            return {
 
-                                               name : text
+                                               code : text
                                            }
 
                                        }
@@ -75,7 +77,7 @@ export default class JoinGameComponent extends Component{
 
                         ()=>{
 
-                            navigate('GameScreen')
+                            navigate('CreateGameScreen',this.state)
                         }
                     }>
                         Join Game
