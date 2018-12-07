@@ -25,11 +25,9 @@ const styles = StyleSheet.create({
 
     spacer : {
 
-        justifyContent: 'center',
-        width : 50,
-        backgroundColor: 'black',
-        height : 2,
-        borderRadius : 5
+        width : Dimensions.get('window').width,
+        backgroundColor: 'gray',
+        height : 5,
     }
 
 
