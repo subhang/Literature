@@ -22,7 +22,7 @@ export default class CardsRow extends Component{
         for(let i = 0;i < (cards.length);i++) {
 
             cardRow.push(
-                <View style={styles.cardContainer}><Button><View style = {styles.card}><Text>{cards[i]}</Text></View></Button></View>
+                <View style={styles.cardContainer}><Button><View style = {styles.cardPresent}><Text>{cards[i]}</Text></View></Button></View>
             )
 
         }
@@ -49,16 +49,18 @@ const styles = StyleSheet.create({
 
         backgroundColor: 'yellow'
     },
-    card:{
+    cardPresent:{
 
         height : 100,
         width: 60,
         borderWidth: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 8
+        borderRadius: 8,
+        backgroundColor: 'gray'
 
     },
+
     cardRow:{
 
         height : 150,
