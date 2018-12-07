@@ -1,7 +1,9 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var player = require('./Player')
+var Player = require('./Player');
+var GameRoom = require('./GameRoom');
+var Card = require('./Card');
 
 
 
@@ -14,6 +16,7 @@ app.get('/', function(req, res){
 // });
 let connected_players = [];
 let Players = [];
+let Games = {};
 io.on('connection', function(socket){
     console.log('hello');
     socket.on('update', function(msg){
@@ -34,36 +37,56 @@ io.on('connection', function(socket){
     });
     socket.on('create', function(data){
 
-        let Player = {};
-        Player.code = data.code;
+        let Player = new Player();
+        Player.game_code = data.code;
+        Games[Player.code] = [];
         Player.status = 1;
         Player.name = data.name;
+        Player.team_id = 1;
         Players.push(Player);
+        Games[Player.game_code].push(Player);
         console.log('creating a game room with code' + data.code);
         console.log('Created player with Player-name' + data.name);
 
     });
     socket.on('join',function(data){
 
-        let Player = {};
-        Player.code = data.code;
+        let Player = new Player();
+        Player.game_code = data.code;
         Player.name = data.name;
         console.log(Player);
         Player.status = 1;
+        Player.team_id = 1;
         Players.push(Player);
-
-        let joined_players = [];
-        for(let i = 0;i < Players.length;i++){
-            if(Players[i].code === data.code){
-
-                joined_players.push(Players[i]);
-            }
-        }
+        Games[Player.game_code].push(Player);
+        // let joined_players = [];
+        // for(let i = 0;i < Players.length;i++){
+        //     if(Players[i].code === data.code){
+        //
+        //         joined_players.push(Players[i]);
+        //     }
+        // }
         console.log('Total Joined Players...');
         console.log(joined_players);
-        io.emit(data.code+'_joined_players',joined_players,{for: 'everyone' })
+        io.emit(data.code+'_joined_players',Games[Player.game_code],{for: 'everyone' })
 
     });
+
+    socket.on('load_game',function(data){
+        var d = new Date();
+        var rand = require('random-seed').create(d.getTime());
+        var len = data.length;
+        var it = len/2;
+        while(it--){
+            var n = rand(len);
+            data[n].team_id = 2;
+        }
+        var set = 8;
+        createadeck(set)
+
+    });
+
+
 });
 http.listen(5678, function(){
     console.log('listening on *:3000');
