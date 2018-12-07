@@ -5,13 +5,7 @@ var player = require('./Player')
 
 
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
 
-// io.on('connection', function(socket){
-//     console.log('a user connected');
-// });
 let connected_players = [];
 let Players = [];
 io.on('connection', function(socket){
@@ -39,8 +33,8 @@ io.on('connection', function(socket){
         Player.status = 1;
         Player.name = data.name;
         Players.push(Player);
-        console.log('creating a game room with code' + data.code);
-        console.log('Created player with Player-name' + data.name);
+        console.log('creating a game room with code : ' + data.code);
+        console.log('Created player with Player-name: ' + data.name);
 
     });
     socket.on('join',function(data){
@@ -62,6 +56,13 @@ io.on('connection', function(socket){
         console.log('Total Joined Players...');
         console.log(joined_players);
         io.emit(data.code+'_joined_players',joined_players,{for: 'everyone' })
+
+    });
+    socket.on('start_game',function(data) {
+
+        console.log('starting game with code : ' + data.code);
+        io.emit(data.code+'_start_game',{for:'everyone'})
+
 
     });
 });

@@ -11,7 +11,17 @@ export default class GameComponent extends Component{
     constructor(props){
 
 
-        super(props)
+        super(props);
+        const io = require('socket.io-client');
+        this.socket = io('http://192.168.0.104:5678');
+        let code = this.props.navigation.state.params.code;
+        let name = this.props.navigation.state.params.name;
+        let data = {};
+        data.code = code;
+        data.name = name;
+        this.socket.emit('start_game',data);
+
+
 
     }
     render(){
