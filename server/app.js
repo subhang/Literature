@@ -2,8 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Player = require('./Player');
-var GameRoom = require('./GameRoom');
-var Card = require('./Card');
+var Deck = require('./deck');
 
 
 
@@ -67,7 +66,7 @@ io.on('connection', function(socket){
         //     }
         // }
         console.log('Total Joined Players...');
-        console.log(joined_players);
+        console.log(Games[Player.game_code]);
         io.emit(data.code+'_joined_players',Games[Player.game_code],{for: 'everyone' })
 
     });
@@ -75,14 +74,21 @@ io.on('connection', function(socket){
     socket.on('load_game',function(data){
         var d = new Date();
         var rand = require('random-seed').create(d.getTime());
-        var len = data.length;
+        var players = [];
+        for((player) in Games[data.code]){
+            if ( player.status == 1){
+                players.push(player);
+            }
+        };
+        var len= players.length;
         var it = len/2;
         while(it--){
             var n = rand(len);
-            data[n].team_id = 2;
+            players[n].team_id = 2;
         }
-        var set = 8;
-        createadeck(set)
+        var sets = 8;
+        var deck = Deck().createdeck(sets);
+
 
     });
 

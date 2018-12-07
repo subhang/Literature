@@ -1,4 +1,4 @@
-export class Player{
+class Player{
 
     constructor (name,game_code,status,team){
 
@@ -8,5 +8,4 @@ export class Player{
         this.team_id = team
 
     }
-
 }

@@ -1,4 +1,4 @@
-export class GameRoom{
+class GameRoom{
 
     constructor(code){
 
@@ -6,6 +6,4 @@ export class GameRoom{
         this.status = 1
 
     }
-
-
 }
