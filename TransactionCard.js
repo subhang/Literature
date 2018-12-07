@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     container:{
 
 
-        flex : 2,
+        width : Dimensions.get('window').width,
+        height : 300,
         backgroundColor: 'yellow'
     }
 

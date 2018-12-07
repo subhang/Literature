@@ -63,7 +63,6 @@ io.on('connection', function(socket){
         console.log('starting game with code : ' + data.code);
         io.emit(data.code+'_start_game',{for:'everyone'})
 
-
     });
 });
 http.listen(5678, function(){

@@ -1,4 +1,4 @@
-import {AppRegistry,View,Image,Text,StyleSheet,TouchableOpacity,TextInput,ScrollView,Alert,Dimensions} from 'react-native';
+import {AppRegistry,View,Image,Text,StyleSheet,TouchableOpacity,TextInput,Dimensions,ScrollView,Alert} from 'react-native';
 import React, {Component} from 'react';
 
 export default class ScoreCard extends Component{
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     container:{
 
 
-        flex : 1,
+        width : Dimensions.get('window').width,
+        height : 300,
         flexDirection : 'row',
         backgroundColor: 'red'
     },

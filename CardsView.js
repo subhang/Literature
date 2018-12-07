@@ -6,41 +6,54 @@ import TransactionCard from "./TransactionCard"
 import TransferCard from "./TransferCard"
 import CardsRow from "./Cardsrow"
 import Spacer from "./Spacer";
-import CardsView from './CardsView'
-const shift =40;
-export default class GameComponent extends Component{
+
+export default class CardsView extends Component{
 
     constructor(props){
 
 
         super(props);
-        const io = require('socket.io-client');
-        this.socket = io('http://192.168.0.104:5678');
-        let code = this.props.navigation.state.params.code;
-        let name = this.props.navigation.state.params.name;
-        let data = {};
-        data.code = code;
-        data.name = name;
-        this.socket.emit('start_game',data);
 
 
 
     }
     render(){
 
+        let cards = ['6♠','6♥','A♣','A😒','AC','AH','6C']
         return (
-            <View>
-                <View style = {styles.points}>
-                </View>
-                <CardsView/>
-            <View style={styles.askCardButton}>
 
-                <Button ><Text>Ask Card</Text></Button>
-
-             </View>
-            </View>
+            <ScrollView style = {{backgroundColor:'gray'}}>
 
 
+                <CardsRow cards={cards}/>
+                <Spacer/>
+                <CardsRow cards={cards}/>
+                <Spacer/>
+
+
+                <CardsRow cards={cards}/>
+                <Spacer/>
+
+                <CardsRow cards={cards}/>
+                <Spacer/>
+
+                <CardsRow cards={cards}/>
+                <Spacer/>
+
+
+                <CardsRow cards={cards}/>
+                <Spacer/>
+
+
+                <CardsRow cards={cards}/>
+                <Spacer/>
+
+
+                <CardsRow cards={cards}/>
+                <Spacer/>
+
+
+            </ScrollView>
         )
 
     }
@@ -61,12 +74,7 @@ const styles = StyleSheet.create({
         flex: 1,
 
     },
-    points:{
 
-        width : Dimensions.get('window').width,
-        height : shift,
-        backgroundColor: 'black'
-    },
     textInput: {
 
         height  : 40,
@@ -98,18 +106,7 @@ const styles = StyleSheet.create({
         width : 300
 
     },
-    askCardButton:{
-        flex: 1,
-        position: 'absolute',
-        bottom : shift,
-        width: Dimensions.get('window').width,
-        height: 60,
-        borderRadius: 10,
-        backgroundColor: '#72ff2c',
-        justifyContent: 'center',
-        alignItems: 'center',
 
-    }
 
 
 
